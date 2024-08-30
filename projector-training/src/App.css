@@ -30,3 +30,11 @@ img {
   width: 500px;
   height: auto;
 }
+
+.reveal-button {
+  padding: 10px;
+}
+
+input {
+  width: 500px;
+}

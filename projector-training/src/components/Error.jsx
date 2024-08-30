@@ -1,24 +1,47 @@
 import React from 'react';
-import SolButton from './SolButton';
+import { useState } from 'react';
+import Button from './Button';
+import ErrorNav from './ErrorNav';
 
-function Error ({ array }) {
+function Error ({ error, array, errorNum, incrementError, decrementError }) {
+    const [hideError, setHideError] = useState(true);
+    const [hideSolution, setHideSolution] = useState(true);
+
+    function showError () {
+        setHideError(!hideError);
+    }
+
+    function showSolution () {
+        setHideSolution(!hideSolution);
+    }
+
     return (
         <>
-            <div id={`err-${array.errorId}`}>
-                <h3>Error {array.errorId} Identification</h3>
-                <input type='text' placeholder='Describe what you think the error is'></input>
-                <SolButton />
-                <div id='err-ident-answer-1'>
-                    <p>{array.errorDesc}</p>
-                    <div id='err-resolution-1'>
-                        <h3>Error {array.errorId} Resolution</h3>
-                        <input type='text' placeholder='Explain what you believe the solution to this error is'></input>
-                        <SolButton />
-                        <p>{array.errorSol}</p>
+            <div id={`err-${error.errorId}`}>
+                <h3>Error {error.errorId} Identification</h3>
+                <div><img alt={error.errorImgAlt} src={error.errorImgSrc}></img></div>
+                <input id='error-input' type='text' placeholder='Describe what you think the error is'></input>
+                <Button func={showError} text='Reveal Error'/>
+
+                {!hideError && (
+                    <div id={`err-ident-answer-${error.errorId}`}>
+                        <p>{error.errorDesc}</p>
+
+                        <div id={`err-resolution-${error.errorId}`}>
+                            <h3>Error {error.errorId} Resolution</h3>
+                            <input id='solution-input' type='text' placeholder='Explain what you believe the solution to this error is'></input>
+                            <Button func={showSolution} text='Reveal Solution'/>
+
+                            {!hideSolution && (
+                                <>
+                                    <p>{error.errorSol}</p>
+                                    <ErrorNav errorNum={errorNum} array={array} incrementError={incrementError} decrementError={decrementError} />
+                                </>
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
-            <img alt='Error 1 Image' src={array.errorImgSrc}></img>
         </>
     )
 }
