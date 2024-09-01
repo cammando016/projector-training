@@ -18,7 +18,6 @@ function ErrorNav ({ array, incrementError, decrementError, errorNum }) {
             errorNavDiv = (
                 <div>
                     <Button func={decrementError} text='Previous Error'></Button>
-                    <Button text='Review Answers'></Button>
                 </div>
             );
             break;
@@ -34,12 +33,7 @@ function ErrorNav ({ array, incrementError, decrementError, errorNum }) {
         }
     }
 
-    return (
-        <>
-            {errorNavDiv}
-            <p>Errors: {errorCount}. Error Num: {errorNum}</p>
-        </>
-    );
+    return ( <> {errorNavDiv} </> );
 }
 
 export default ErrorNav;

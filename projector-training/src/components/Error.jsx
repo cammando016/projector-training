@@ -1,20 +1,8 @@
 import React from 'react';
-import { useState } from 'react';
 import Button from './Button';
 import ErrorNav from './ErrorNav';
 
-function Error ({ error, array, errorNum, incrementError, decrementError }) {
-    const [hideError, setHideError] = useState(true);
-    const [hideSolution, setHideSolution] = useState(true);
-
-    function showError () {
-        setHideError(!hideError);
-    }
-
-    function showSolution () {
-        setHideSolution(!hideSolution);
-    }
-
+function Error ({ error, array, errorNum, incrementError, decrementError, showError, showSolution, hideError, hideSolution }) {
     return (
         <>
             <div id={`err-${error.errorId}`}>

@@ -100,9 +100,18 @@ function App () {
     })) 
   );
 
+  //Show and hide the error solutions
+  const [hideError, setHideError] = useState(true);
+  const [hideSolution, setHideSolution] = useState(true);
+
+  function showError () { setHideError(!hideError); }
+
+  function showSolution () { setHideSolution(!hideSolution); }
+
   //Track the current error user is up to
   const [currentErrorIndex, setCurrentErrorIndex] = useState(0);
 
+  //Saves answers to "answers" array and renders next error on screen
   const incrementError = () => {
     //Update answers array with the values typed into input fields
     const updatedAnswers = [...answers];
@@ -113,6 +122,10 @@ function App () {
     //Clear input fields
     document.querySelector('#error-input').value = '';
     document.querySelector('#solution-input').value = '';
+
+    //Hide error answer divs for next error
+    showError();
+    showSolution();
 
     //Increment error count
     setCurrentErrorIndex((prevIndex) => Math.min(prevIndex + 1, errors.length - 1));
@@ -130,6 +143,10 @@ function App () {
     document.querySelector('#error-input').value = '';
     document.querySelector('#solution-input').value = '';
 
+    //Hide error answer divs for next error
+    showError();
+    showSolution();
+    
     //Decrement error count
     setCurrentErrorIndex((prevIndex) => Math.max(prevIndex - 1, 0));
   }
@@ -142,6 +159,10 @@ function App () {
         errorNum = {currentErrorIndex+1}
         incrementError={incrementError}
         decrementError={decrementError}
+        showError={showError}
+        showSolution={showSolution}
+        hideError={hideError}
+        hideSolution={hideSolution}
       />
     </>
   );
