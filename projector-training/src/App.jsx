@@ -8,7 +8,7 @@ function App () {
   const errors = [
       {
         errorId: 1,
-        errorDesc: 'The sound channel is on nonsync instead of dcinema',
+        errorDesc: 'The sound channel is on nonsync instead of dcinema/digital 1',
         errorSol: 'Press dcinema/channel 1 on the sound rack or run "audio dcinema" macro',
         errorImgSrc: 'https://imgur.com/LPvTGOU.jpg',
         errorImgAlt: 'Audio error'
@@ -92,14 +92,45 @@ function App () {
       }
   ];
 
+  //Storage for user answers
+  const [answers, setAnswers] = useState( errors.map(() => (
+    { 
+      errorAnswer: '', 
+      errorSolution: '' 
+    })) 
+  );
+
   //Track the current error user is up to
   const [currentErrorIndex, setCurrentErrorIndex] = useState(0);
 
   const incrementError = () => {
-    setCurrentErrorIndex((prevIndex) => Math.min(prevIndex + 1, errors.length - 1));
-  }
+    //Update answers array with the values typed into input fields
+    const updatedAnswers = [...answers];
+    updatedAnswers[currentErrorIndex].errorAnswer = document.querySelector('#error-input').value;
+    updatedAnswers[currentErrorIndex].errorSolution = document.querySelector('#solution-input').value;
+    setAnswers(updatedAnswers);
+    
+    //Clear input fields
+    document.querySelector('#error-input').value = '';
+    document.querySelector('#solution-input').value = '';
 
+    //Increment error count
+    setCurrentErrorIndex((prevIndex) => Math.min(prevIndex + 1, errors.length - 1));
+  };
+
+  //Saves answers to "answers" array and renders previous error on screen
   const decrementError = () => {
+    //Update answers array with values typed into input fields
+    const updatedAnswers = [...answers];
+    updatedAnswers[currentErrorIndex].errorAnswer = document.querySelector('#error-input').value;
+    updatedAnswers[currentErrorIndex].errorSolution = document.querySelector('#solution-input').value;
+    setAnswers(updatedAnswers);
+
+    //Clear input fields
+    document.querySelector('#error-input').value = '';
+    document.querySelector('#solution-input').value = '';
+
+    //Decrement error count
     setCurrentErrorIndex((prevIndex) => Math.max(prevIndex - 1, 0));
   }
 
